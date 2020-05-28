@@ -1,4 +1,4 @@
-# Pangu
+# G2 Theme Generator
 
 ## Develop
 

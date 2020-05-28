@@ -1,47 +1,26 @@
-import React, { ComponentType, FC, Suspense } from 'react'
-import { Redirect, Route, Router, Switch } from 'react-router-dom'
+import React, { FC, Suspense, lazy } from 'react'
 import { hot } from 'react-hot-loader/root'
-import { MenuLayout as Layout } from '@/layouts'
+import { BasicLayout } from '@/layouts'
 import PageLoading from '@/components/page-loading'
-import routes from '@/routes'
-import { History } from 'history'
 import '@/styles/index.less'
+import Configurations from './configurations'
+import { Layout } from 'antd'
 
-interface Props {
-  history: History
-}
+const Examples = lazy(() => import('./examples'))
 
-function renderComponent(Cmp: ComponentType | undefined, props: any) {
-  return Cmp ? <Cmp {...props} /> : null
-}
-
-const App: FC<Props> = ({ history }) => (
-  <Router history={history}>
-    <Layout routes={routes}>
-      <Suspense fallback={<PageLoading />}>
-        <Switch>
-          {routes.map(
-            (
-              { component: Cmp, routes: childRoutes, ...restProps },
-              index: number
-            ) => (
-              <Route
-                key={index}
-                {...restProps}
-                render={(props) =>
-                  renderComponent(Cmp as ComponentType, {
-                    ...props,
-                    routes: childRoutes,
-                  })
-                }
-              />
-            )
-          )}
-          <Redirect from="*" to="/error/404" />
-        </Switch>
-      </Suspense>
-    </Layout>
-  </Router>
+const App: FC = () => (
+  <BasicLayout>
+    <Suspense fallback={<PageLoading />}>
+      <Layout style={{ height: '100%' }}>
+        <Layout.Sider theme="light" width={400}>
+          <Configurations />
+        </Layout.Sider>
+        <Layout.Content>
+          <Examples />
+        </Layout.Content>
+      </Layout>
+    </Suspense>
+  </BasicLayout>
 )
 
 export default hot(App)

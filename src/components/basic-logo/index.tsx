@@ -1,5 +1,4 @@
 import React, { FC, useCallback, SyntheticEvent } from 'react'
-import { Link } from 'react-router-dom'
 import Animate from 'rc-animate'
 import styles from './index.module.less'
 
@@ -15,7 +14,7 @@ const BasicLogo: FC<LogoProps> = ({ collapsed }) => {
     []
   )
   return (
-    <Link to="/" className={styles.appLogo}>
+    <div className={styles.appLogo}>
       <span className={styles.appImg}>
         <img src="/logo.png" onError={handleImgLoadError} />
       </span>
@@ -26,7 +25,7 @@ const BasicLogo: FC<LogoProps> = ({ collapsed }) => {
           </span>
         ) : null}
       </Animate>
-    </Link>
+    </div>
   )
 }
 
